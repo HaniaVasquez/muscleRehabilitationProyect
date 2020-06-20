@@ -1,11 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('./services/mongo')
+const {handleError} = require('./helper/error')
 //Midlewares
 
 //Routers
-const patients= require('./api/patients/routes/index')
-
+const patients = require('./api/patients/routes/index')
+const exercises = require('./api/exercises/routes/index')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -50,7 +51,15 @@ app.use((req, res, next) => {
 });
 
 //Suscribir la ruta de la consulta
-app.use('/patient',patients)
+app.use('/patient', patients)
+app.use('/exercises', exercises)
+
+
+//Se suscribe helper de errores
+app.use((err, req, res, next) => {
+    if (!err.statusCode) err.statusCode = 500;
+    handleError(err, res);
+});
 
 // Custom 404 route not found handler
 app.use((req, res) => {
@@ -61,4 +70,4 @@ app.use((req, res) => {
 })
 
 mongoose.register()
-module.exports=app
+module.exports = app

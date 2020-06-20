@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 //importar la clase esquemas (para declarar los esquemas)
 const {Schema}= mongoose
-const PatientsSchema = new Schema ({
+const ExerciseDataSchema = new Schema ({
     name: String,
     gender:String,
     document: Number,
@@ -14,5 +14,5 @@ const PatientsSchema = new Schema ({
     dateOfBirth: Number
 })
 // Recibe un string con el nombre del modelo y el esquema como paramentros
-const patients=mongoose.model('Patient',PatientsSchema)
-module.exports=patients
+const exerciseData=mongoose.model('exerciseData',ExerciseDataSchema, 'exerciseDescription')
+module.exports=exerciseData
